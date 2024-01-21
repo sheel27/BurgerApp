@@ -2,6 +2,8 @@ const express = require("express");
 const Connection = require("./db");
 const app = express();
 
+const cors = require("cors"); // Added
+
 const PORT = 5000;
 
 app.get("/", (req, res) => {
@@ -16,6 +18,18 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+//Added
+app.use(cors(
+  {
+    origin: ["https://deploy-mern-1whq.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true
+  }
+));
+
+//Added
+mongoose.connect("mongodb+srv://sheelparikh:sheelparikh@burger-app.3n5irs1.mongodb.net/Burger-app?retryWrites=true&w=majority");
 
 app.use(express.json());
 app.use("/api", require("./Routes/CreateUser"));
